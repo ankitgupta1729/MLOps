@@ -1,0 +1,15 @@
+artifact_uri: ./mlruns/0/3cc09136ea7144009a4025a1ce80063b/artifacts
+end_time: 1714848491608
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 3cc09136ea7144009a4025a1ce80063b
+run_name: LogisticRegression
+run_uuid: 3cc09136ea7144009a4025a1ce80063b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1714848485704
+status: 3
+tags: []
+user_id: Ankit19.Gupta

@@ -1,0 +1,13 @@
+1. include *.txt
+2. include *.md
+3. include *.cfg
+4. include *.pkl
+5. recursive-include ./prediction_model/*
+7. include prediction_model/datasets/train.csv
+8. include prediction_model/datasets/test.csv
+9. include prediction_model/trained_models/*.pkl
+10. include prediction_model/VERSION
+11. include ./requirements.txt
+12. exclude *.log
+13. recursive-exclude * __pycache__
+14. recursive-exclude * *.py[co]

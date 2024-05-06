@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/ankit19.gupta/ankit/ankit/ML_Code/MLOps/mlflow_demo/mlruns/1/dbbc4cd64db2464bb689e3e9f64e4ea1/artifacts
+end_time: 1714853921202
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+run_id: dbbc4cd64db2464bb689e3e9f64e4ea1
+run_name: LogisticRegression
+run_uuid: dbbc4cd64db2464bb689e3e9f64e4ea1
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1714853915134
+status: 3
+tags: []
+user_id: Ankit19.Gupta

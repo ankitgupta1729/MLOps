@@ -1,0 +1,15 @@
+artifact_uri: ./mlruns/0/42d1665f5795434284c3b90227efc260/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 42d1665f5795434284c3b90227efc260
+run_name: welcoming-shrike-603
+run_uuid: 42d1665f5795434284c3b90227efc260
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1714852020079
+status: 1
+tags: []
+user_id: Ankit19.Gupta

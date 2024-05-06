@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/ankit19.gupta/ankit/ankit/ML_Code/MLOps/mlflow_demo/mlruns/1/ec251a51b28d4c7385fe6a589a0cff40/artifacts
+end_time: 1714849286184
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+run_id: ec251a51b28d4c7385fe6a589a0cff40
+run_name: DecisionTreeClassifier
+run_uuid: ec251a51b28d4c7385fe6a589a0cff40
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1714849278858
+status: 3
+tags: []
+user_id: Ankit19.Gupta

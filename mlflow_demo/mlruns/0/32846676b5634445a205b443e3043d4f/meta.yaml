@@ -1,0 +1,15 @@
+artifact_uri: ./mlruns/0/32846676b5634445a205b443e3043d4f/artifacts
+end_time: 1714848485684
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 32846676b5634445a205b443e3043d4f
+run_name: DecisionTreeClassifier
+run_uuid: 32846676b5634445a205b443e3043d4f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1714848476856
+status: 3
+tags: []
+user_id: Ankit19.Gupta

@@ -1,0 +1,15 @@
+artifact_uri: ./mlruns/0/6dcb1dca29ee4092bb072e94234e6674/artifacts
+end_time: 1714848978873
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 6dcb1dca29ee4092bb072e94234e6674
+run_name: RandomForestClassifier
+run_uuid: 6dcb1dca29ee4092bb072e94234e6674
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1714848970250
+status: 3
+tags: []
+user_id: Ankit19.Gupta

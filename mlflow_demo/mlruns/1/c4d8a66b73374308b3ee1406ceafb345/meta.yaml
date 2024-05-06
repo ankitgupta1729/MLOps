@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/ankit19.gupta/ankit/ankit/ML_Code/MLOps/mlflow_demo/mlruns/1/c4d8a66b73374308b3ee1406ceafb345/artifacts
+end_time: 1714853927626
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+run_id: c4d8a66b73374308b3ee1406ceafb345
+run_name: RandomForestClassifier
+run_uuid: c4d8a66b73374308b3ee1406ceafb345
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1714853921216
+status: 3
+tags: []
+user_id: Ankit19.Gupta
