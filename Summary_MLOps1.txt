@@ -1770,4 +1770,1690 @@ connect them to create the flow.
 
 (91) 
 
+Containers are an abstraction at the app layer that packages code and dependencies
+together. Multiple containers can be run on the same machine and share the OS
+kernel. Each running container is considered an isolated process in user space.
+
+(92)
+
+Docker automates the repetitive and time-consuming configuration task, saving
+both time and effort for the developer. 
+
+(93)
+
+Docker is a containerization platform to package applications and their dependencies
+in the form of a container. It ensures that all the required libraries and dependencies
+are wrapped in an isolated environment to run the application smoothly in the
+development, test, and production environments. Docker is popular among
+developers as it is lightweight, fast, portable, secure, and more efficient than virtual
+machines. A containerized application will start running as soon as you run the
+Docker container.
+
+(94)
+
+Docker has its own Docker registry, called Docker hub. Docker hub allows
+developers to store and distribute container images over the internet. An image tag
+enables developers to differentiate images. A Docker registry has public and private
+repositories. A developer can store a container image on the Docker hub using the
+push command and retrieve one using the pull command.
+
+(95)
+
+Many a time, the code works perfectly on your machine but throws an error when
+you run it on another machine. This happens with developers and data scientists as
+well. The reason could be anything from a different OS to a different release of an OS,
+different python versions, or dependency issues. So, when they face this issue, they
+might end up spending a lot of time fixing it. With Docker, you should not encounter
+these issues, as Docker packages require files, configuration, and commands for
+seamless flow.
+
+(96)
+
+With Docker, you can put all the required files in the directory and write down
+the configuration, OS version, and commands to be executed sequentially in a
+Dockerfile. You can also connect the two Docker containers with the same network.
+Additionally, you can use the same Dockerfile for development, pre-production, and
+production.
+
+Docker ensures reproducibility, portability, easy deployment, granular updates,
+lightness, and simplicity.
+
+(97) Installation on unix:
+
+https://www.youtube.com/watch?v=cqbh-RneBlk&ab_channel=vCloudBitsBytes
+
+sudo apt-get update
+sudo apt install docker.io
+sudo systemctl enable docker
+sudo systemctl status docker
+sudo docker run hello-world
+
+
+(98) Docker compose:
+
+Docker compose enables developers to configure and run more than one container.
+It reads the configuration from the docker-compose.yml file. A single docker-
+compose up command can start the services and run the multi-container applications.
+On the other hand, you can destroy all of this using the docker-compose down
+command. You can also remove the volumes by adding the -- volumes flag.
+
+You can install the Docker compose using the following command:
+
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+Authorize docker-compose to execute files:
+
+sudo chmod +x /usr/local/bin/docker-compose
+
+Finally, verify the installation:
+
+docker-compose --version
+
+The installation provides the following:
+• Docker Engine
+• Docker CLI client
+• Docker Compose
+
+(99) Hello World with Docker:
+
+This is a sample Docker image to test whether Docker is working properly. By
+running the following command, you will create the first Docker container:
+
+sudo docker run hello-world
+
+-- procedure:
+
+To generate this message, Docker took the following steps:
+1. The Docker client contacted the Docker daemon.
+2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+(amd64)
+3. The Docker daemon created a new container from that image, which runs
+the executable that produces the output you are currently reading.
+4. The Docker daemon streamed that output to the Docker client, which
+sent it to your terminal.
+
+(100) Docker objects:
+
+While working with Docker, you can create and use Docker objects like images,
+containers, volumes, and networks. In this chapter, you are going to learn about
+some of these objects.
+
+
+-- Dockerfile
+
+Dockerfile can be considered as a set of commands or instructions that enables
+developers to build Docker images. These commands or instructions get executed
+sequentially. It is a plain text document with no extension.
+
+-- Docker Images
+
+To create a Docker container, a Docker image needs to be created. It stores all the
+code and dependencies required to run the application and acts as a template to
+run a container instance. A Docker image can be uploaded on the Docker hub, from
+where it can be pulled to the server or system to run the container.
+To view the list of available Docker images, execute the following command in the
+terminal:
+
+docker images
+
+
+-- Docker Containers
+
+An instance of a container is created when you run the Docker image. You can use
+the same Docker image to run as many containers as you want. It is an important
+component of the Docker ecosystem. Docker runs containers in an isolated
+environment.
+
+An additional layer called a container layer, gets automatically created on top of
+the existing image layers when the developer runs a container. A Docker container
+has its own read and write layer, which allows developers to make changes that
+are specific to that container. Suppose you are running three containers using the
+same Docker image, and you install another version of the python package inside
+a running container. This will not affect the existing version of the python package
+in other containers. Docker manages the data within the Docker container using
+Docker Volumes.
+
+However, the data volume is part of the Docker host file system,
+and it is simply mounted inside the container.
+
+The command to check all the running containers is docker ps.
+The command to check all the running and stopped containers is docker ps -a
+
+To run Docker in the background, run the container in detached mode. You can use
+the -d flag to run the container in detached mode.
+
+(101)
+
+The bridge network is the default network interface
+that Docker Engine assigns to a container.
+
+sudo docker network ls
+
+This command will show you the list of networks and their scope. The output
+contains the following headers:
+NETWORK ID, NAME, DRIVER, SCOPE
+To check the network details of any Docker container, use the following command,
+followed by the network ID:
+
+sudo docker network inspect <NETWORK ID>
+
+
+The -p flag is used to map container ports to host ports. Consider this example:
+docker run -p <myport>:<containerport> nginx
+
+Note: To observe the output, use docker logs [container_id].
+
+(102) Create a Dockerfile
+
+It is a standard practice to write
+instructions in the uppercase to differentiate between instructions and arguments.
+
+-- FROM
+
+•The FROM instruction sets the base image for subsequent instructions.
+•A valid Dockerfile must have a FROM instruction.
+•FROM can occur multiple times in the Dockerfile.
+
+-- CMD
+
+•CMD defines a default command to execute when a container is being created.
+•CMD does not get executed while building an image.
+•Can be overridden at runtime.
+
+-- RUN
+
+It executes a command in a new layer on top of the current image and commits the
+results.
+
+-- COPY
+
+The COPY instruction copies new files or directories from <src> and adds them to the
+file system of the container at the path <dest>.
+
+-- ENTRYPOINT
+
+This helps you to configure the container as an executable; it is similar to CMD. There
+can be at max one instruction for ENTRYPOINT; if more than one is specified, only the
+last one will be honored.
+
+-- EXPOSE
+
+This exposes the network ports on the container, on which it will listen at runtime.
+
+-- ENV
+
+This will set the environment variables <key> to <value> within the container.
+When a container is running from the resulting image, it will pass and persist all the
+information to the application running inside the container.
+
+(103) Build a Docker image
+
+Using the docker build command, users can automate a docker build that executes
+several command-line instructions in succession.
+The docker build command builds an image from a Dockerfile and a context:
+
+docker build -t ImageName:TagName dir
+
+Where:
+● -t: Image tag
+● TagName: The tag you want to give to your image
+● ImageName: The name you want to give to your image
+● dir: The directory where the Dockerfile is present
+
+For the current directory, simply use . (period):
+
+sudo docker build –t myimage:v1 .
+
+Check the newly created image using the docker images command.
+The next step is to build the container from the newly created image.
+
+Note: To check all the commands run against that image, execute the following
+command docker history [Image_id]
+
+(104)
+
+A Docker container is a runtime instance of a Docker image. The docker run
+command can run the Docker image as follows:
+
+docker run --name test -it myimage:v1
+
+Where:
+
+•-it: It is used to mention that you want to run the container in interactive
+mode.
+•--name: It is used to give a name to the container.
+•myimage: It is the image name that is to be run.
+•v1: It is the tag of the image.
+
+(105)
+
+The docker inspect [container_id] command will populate the complete
+information of the container in JSON format.
+
+The docker top [container_id] command will show top-level processes within
+a container.
+
+(106) Lifecycle and flow of Docker Container:
+
+A. DockerFile
+B. Create Docker Image using docker build
+C. Create Docker Container using docker run where the application is created
+D. Application is runing now
+
+D1. if you want to stop-- docker stop
+D2. if you want to restart -- docker restart
+
+Di. if you want to pause-- docker pause
+Dii. if you want to unpause: docker unpause
+
+E. kill the docker process using Docker kill 
+
+(106) Dockerize and Deploy the ML Model
+
+When you have all the files at one place, you can start building the Docker image
+using the docker build command.
+
+The next step is to run the image to start the Docker container instance using
+the docker run command.
+
+Just run the docker command in the terminal, and you will get the list of commonly
+used Docker commands.
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+# Build ML Web Apps Using API
+
+(107)
+
+When developing a web app in Python, you are very likely to use a framework for
+it. A framework is a library that eases the life of a developer while building scalable,
+standard, and production-ready web applications.
+
+(108) REST APIs:
+
+REST is an acronym for Representational State Transfer. REST is an architectural
+style mainly created to guide the development and design of the architecture for
+the World Wide Web (WWW). In simple words, a web service or web API following
+REST architecture is a REST API.
+
+REST is a pattern to make APIs that can be used to access resources like images,
+videos, text, JSON, and XML hosted on the server. RESTful API provides a common
+platform for communicating between applications built in different programming
+languages.
+
+
+The interesting thing about the API is that the client does not need to know the
+internal operations performed at the server’s end and vice versa. REST API treats
+any data requested/processed by the user as a resource; it can be text, image, video,
+and so on.
+
+(109)
+
+REST API is stateless; it means that the client should provide all the parameters in the
+request every time the API is called. The server will not store previous parameters
+passed with the request by the client.
+
+Client makes a request for Get,post,put,delete and then Rest API convert it into HTML request and it goes to server
+and then server makes the HTML response and then again REST api converts it into JSON,xml and sends to client.
+
+(110) FASTAPI:
+
+FastAPI is a web framework for developing RESTful APIs in Python. FastAPI is a
+lightweight (compared to Django), easy-to-install, easy-to-code yet high-performing
+framework. It enables the development of REST API with a minimal code requirement.
+
+Once you develop and run the API, you can access the documentation for your application at
+{API endpoint}/docs or {API endpoint}/redoc
+
+Note: FastAPI requires Python 3.6 and above.
+
+(111)
+
+Let’s install FastAPI and uvicorn, an Asynchronous Server Gateway Interface
+(ASGI) server, for production.
+
+pip install fastapi uvicorn
+
+Now, create a loan_pred_app.py file. First, load the dependencies and pickle the object
+of the trained model. Furthermore, create a FastAPI instance and assign it to the app.
+This will make the app a point of interaction while creating the API.
+
+(check demo)
+
+(112)
+
+Now, it’s time to run the app and see standard UI auto-generated by FastAPI, which
+uses swagger, now known as openAPI.
+
+The preceding command can be interpreted as follows:
+
+•loan_pred_app refers to the name of the file where the API is created.
+•The app is the instance defined in it.
+•--reload will simply restart the FastAPI server every time a change is made
+in the app file.
+
+(113)
+
+Simply add /docs to the end of the URL, and you should see auto-generated
+docs for the app.
+
+http://127.0.0.1:8000/docs
+
+FastAPI provides the functionality to validate the data type. It detects the invalid
+data type at runtime and returns the bad input to the client, which eventually
+reduces the burden of managing exceptions at the developer’s end.
+
+Optionally, you can run the curl command to get the output in the
+terminal.
+
+(114) Streamlit
+
+Streamlit is an open-source library in Python that enables users to build and share
+attractive UI for machine learning models.
+
+With streamlit, you can add beautiful and interactive widgets
+to get the user inputs with a few lines of code, such as a dropdown selection box and
+a slider to change the values.
+
+In streamlit, everything can be coded in Python without the need for any front-end
+skills such as JavaScript to develop stunning UI for the app.
+
+
+Let’s install streamlit using the following command:
+
+pip install streamlit
+
+Verify the streamlit installation using the following:
+
+streamlit hello
+
+(115)
+
+Open the terminal and run the following command where the streamlit_app.py file is
+located:
+
+streamlit run streamlit_app.py
+
+Or
+
+streamlit run streamlit_app.py &>/dev/null&
+
+To deploy your Streamlit app on the streamlit cloud, you can use Streamlit sharing.
+Upload your files with the requirements.txt file on GitHub. Create an account on their
+website at https://streamlit.io/cloud and then provide a GitHub link and streamlit
+app file. This will deploy your app on the streamlit cloud.
+
+(116)  Flask
+
+Flask is a web framework that allows you to build web applications using Python.
+It is a lightweight framework compared to Django. It follows the REST architecture.
+You can develop simple web applications with Flask, as it requires less base code.
+Flask is based on the Web Server Gateway Interface (WSGI) and Jinja2 engine.
+
+To start a Flask application, you need to use the run() function. If you set debug=True
+inside the run() function, then it becomes easy to track the error. When you enable
+debug mode, the server will restart every time you make changes in the app file and
+save it. If an error occurs, then it shows the reason in the browser itself. However, you
+should not use this feature while deploying models in the production environment.
+
+
+(117)
+
+In a Flask, you can call static files like CSS or JavaScript files to render the web page
+of the app. The route() function guides the Flask to the URL called by the function.
+
+pip install Flask
+
+To run the Flask application in the terminal, go to the directory where app.py and
+other required files are located:
+
+python app.py
+
+(118)
+
+app.route(‘/’) will route to the home page URL; the trailing slash ‘/’is generally usedas a convention for the home page.
+
+(119) Gunicorn
+
+The Gunicorn is an application server for running a Python app. Gunicorn is WSGI
+compatible, so it can communicate with multiple WSGI applications. In the current
+case, Gunicorn translates the request received from Ngnix for the Flask app and vice
+versa.
+
+To install Gunicorn, execute the following command:
+
+sudo apt-get install gunicorn3
+
+Go to the directory where the app.py file is located and run:
+
+gunicorn3 app:app
+
+This command helps to know which IP and port are be.
+
+(120) NGINX
+
+NGINX is a high-performance, highly scalable open-source, and reverse proxy web
+server. It can perform load balancing and caching application instances. It accepts
+incoming connections and decides where they should go next. In the current case, it
+sits on top of a Gunicorn.
+
+To install NGINX, execute the following command:
+
+sudo apt-get install nginx
+
+
+You can check the status of NGINX using the following command:
+
+sudo service nginx status
+
+Now, go to the following path:
+
+cd /etc/nginx/sites-enabled/
+
+Note: NGINX configuration files do not have any extension, and every line should be closed using ; (semicolons).
+
+Create a new configuration file for the Flask app:
+
+sudo nano flask_app
+
+Then, add the following snippet and save the file:
+
+server{
+2.         listen 80;
+3.         server_name 0.0.0.0;
+4.
+5.         location / {
+6.                 proxy_pass http://unix:/home/suhas/webapi/flask/
+flaskapp.sock;
+7.         }
+8. }
+
+Here, you are dictating NGINX to listen to port 80. Inside the location block, pass the
+request to the socket using proxy_pass. After changing the NGINX file, restart the
+NGINX service using the following command:
+
+sudo service nginx restart or sudo systemctl restart nginx
+
+You can check the status of NGINX using the following command:
+
+sudo service nginx status
+
+Go to the directory where the app.py file is located and run the following command
+to start the Gunicorn server:
+
+gunicorn3 app:app
+
+Open a new tab in the browser and enter the IP in the address bar. You should see
+the Flask app up and running.
+
+Create and run the service in the background:
+Create a systemd unit file that allows the Ubuntu boot system to start Gunicorn
+automatically and serve up the Flask application every time the server starts.
+
+First, go to the system directory using the following command:
+
+cd /etc/systemd/system
+
+Next, you need to create a service for the Flask app
+
+sudo nano flaskapp.service
+
+Then, add the following commands to it and save it:
+
+1. [Unit]
+2. Description=Flaskapp Gunicorn Service
+3. After=network.target
+4.
+5. [Service]
+6. User=suhas
+7. Group=www-data
+8. WorkingDirectory=/home/suhas/webapi/flask
+9.
+10. ExecStart=/usr/bin/gunicorn3
+sock -m 007 app:app
+--workers
+3
+--bind
+unix:flaskapp.
+11. Restart=on-failure
+12. RestartSec=10
+13.
+14. [Install]
+15. WantedBy=multi-user.target
+
+In the preceding service, you are instructing Gunicorn to start three worker processes,
+which can be updated afterward. Then, create and link the UNIX socket file. In the
+current scenario, 007 is used for access so that the socket file allows access to the
+owner and group and restricts others. Then, pass the filename of the app.
+
+sudo systemctl daemon-reload
+
+sudo service flaskapp restart
+
+Restart the flaskapp service by running the preceding command, and you should
+see flaskapp.sock file created in the app directory.
+
+If everything goes well, open the browser and enter the IP in the address bar. You
+should see the app up and running.
+
+-----------------------------------------------------------------------------------------------------------
+
+Build Native ML Apps
+
+(121) 
+
+In order to consume ML models as a native application, a GUI should be built for the
+users. In this chapter, you will learn to build native applications using Tkinter and
+Kivy packages, which can be converted into desktop applications for Windows and
+Android devices, respectively.
+
+Python allows multiple ways to build a Graphical User Interface (GUI), which is an
+application that contains the main window, buttons, widgets, input fields, and the
+like. End users can interact with it and see the response based on their actions and
+inputs. Python has numerous GUI frameworks or toolkits available.
+
+(122) Introduction to Tkinter
+
+Tkinter is a free software released under a Python license.
+
+Tkinter is the Python interface to the Tk GUI library. Tk is derived from the Tool
+Command Language (TCL), which is a scripting language. The best part is that you
+do not need to install Tkinter explicitly as it comes with Python since 1994.
+
+Tkinter enables developers to create widgets (GUI elements) easily, which are
+packaged in the Tk toolkit. With widgets, developers can create buttons, menus,
+and input fields to get user data. These widgets can be linked to Python features,
+methods, data, or other widgets.
+
+For instance, a button widget can be used to perform a certain action upon click
+event, or it can call the function and pass the user's data as parameters.
+
+(123)
+
+You can verify the Tkinter installation using the following command:
+
+python -m tkinter
+
+(124) Hello World app using Tkinter
+
+Let’s create a basic Tkinter app to give you a glimpse of Tkinter functionality. The
+following code creates a simple app displaying the Hello World text with the Exit
+button to close the app.
+
+1. from tkinter import *
+2. win = Tk()
+3.
+4. a = Label(win, text ="Hello World")
+5. a.pack()
+6.
+7. b=Button(win, text='Exit', command=win.destroy)
+8. b.pack()
+9.
+10. win.mainloop()
+
+In the preceding code, first, the tkinter package is imported to create the main
+window for the app using the Tk(), where the win is the name of the main window
+object that has been created using Tk(). A Label() widget is used to display text
+or images, and the win parameter is used to denote the parent window of the app.
+
+The pack() organizes the widgets in blocks (such as buttons and labels). If you do
+not organize the widget, your app will still run, but that widget will be invisible. A
+Button() widget is used to add buttons, and here it is used to close the Tkinter app.
+When the user clicks on the Exit button, the Tkinter app window will close. Finally,
+the mainloop() is to keep the application running and execute user commands.
+
+(125) Build an ML-based app using Tkinter
+
+Here, you need to develop the Python code for data loading, data cleaning, feature
+engineering, model building and finally, saving trained models to serialized objects
+like pickles. Then you can use trained models to get predictions on the Tkinter app.
+
+Let’s consider a loan prediction scenario, where the goal is to predict whether a
+customer’s loan will be approved. The focus will not be on hyperparameter tuning
+and model optimization. However, you can optimize a model to improve its overall
+performance.
+
+Tkinter comes with three geometry managers: grid, place, and pack. A geometry
+manager’s job is to arrange widgets in specific positions. The place geometry
+manager gives you more flexibility compared to the other two geometry managers.
+You can declare the vertical and horizontal position of the widget. The following
+code mentions the vertical and horizontal positions of each widget, including the
+Predict button.
+
+run the following command in demo folder:
+
+python3 ml_app.py
+
+(126) Convert Python app into Windows EXE file
+
+Now, you can convert this Tkinter - ML app to Windows executable application
+using Pyinstaller.
+
+Pyinstaller packages a Python application
+and its dependencies into a single package that can be run independently without
+installing a Python interpreter.
+
+(127)
+
+Here, a virtual environment is created with Python version 3.7 using conda, as
+follows:
+
+conda create -n venv_tkinter python=3.7 -y
+
+Once it is created, activate it using:
+
+source activate venv_tkinter
+
+Note: To remove the conda environment, you can execute the following command
+
+conda env remove -n venv_tkinter:
+
+(128) run the following command to create windows app from python code:
+
+pyinstaller --noconfirm --onefile --windowed --icon "python_104451.ico" --add-data "~/trained_model/model.pkl:." --hidden-import "sklearn" --hidden-import "sklearn.ensemble._forest" --hidden-import "sklearn.neighbors._typedefs" --hidden-import "sklearn.utils._weight_vector" --hidden-import "sklearn.neighbors._quad_tree" "ml_app.py"
+
+Where:
+
+•-y,--noconfirm: Will replace output directory without asking for
+confirmation
+•-F, --onefile: Will create one file bundle executable
+•-D, --onedir: Will create one folder bundle containing the Windows
+executable file
+•--add-data: Additional non-binary files or folders to be added to the
+executable
+•-c, --console, --nowindowed: Opens a console window for standard i/o
+(default)
+•-w, --windowed, --noconsole: Used to not provide a console window for
+standard i/o
+•--hidden-import MODULENAME: Used to name an import not visible in the
+code of the script(s); this option can be used multiple times
+
+Now, open the ml_app.exe file located in the dist folder.
+
+(129) Build an ML-based app using kivy and kivyMD
+
+In this section, using the pickle object of the trained model generated earlier in this
+chapter, let’s develop and deploy the FastAPI endpoint on the remote server, i.e.,
+Heroku. You will learn how to deploy ML models on the Heroku platform with CI/
+CD pipeline in the upcoming chapter.
+
+Moreover, you can deploy this FastAPI app using any other hosting service, such
+as PythonAnywhere or Amazon EC2. In the current scenario, a remote endpoint is
+used to make predictions in the Kivy app.
+
+So, whenever users pass the data in the kivy app and press the Predict button, it will
+send the parameters to the API endpoint, where it will pass the received parameters
+to the model object and in return, send the prediction to API. The Kivy app will fetch
+the output (prediction) provided by the API.
+
+(130) KivyMD app
+
+Kivy is an open-source software library for the quick development of apps with a
+simple GUI. Kivy is written in Python, so in order to use it, you should have Python
+installed on your system. Unlike Tkinter, it is not pre-installed with Python; you
+need to install it separately.
+
+KivyMD is an extension of the kivy framework. It is a collection of Material Design
+(MD) widgets and is mainly used for GUI building along with kivy. It is a good idea
+to create a virtual environment first, as it helps maintain different packages easily.
+You can install kivy and KivyMD using the following commands:
+
+pip install kivy
+pip install kivymd
+
+(131)
+
+Use the deployed endpoint on the remote server. Keep it simple for now. Import the
+required dependencies first. Here, import MDApp, which is a base app. Build the app
+on top of this base app as it takes care of initialization and booting up the app.
+
+Then, import the Builder function for the front end of the app.
+
+
+1. from kivymd.app import MDApp
+2. from kivy.lang.builder import Builder
+3. from kivy.uix.screenmanager import Screen, ScreenManager
+4. from kivy.core.window import Window
+5. from kivy.network.urlrequest import UrlRequest
+6. import certifi as cfi
+
+The screen is the base, and other components will be placed on top of it. It is similar
+to the web page. Here, you can assign a name to the screen. As you can see in the
+following code, a hierarchy is being maintained.
+
+The screen managers mainly manage the different screens. Let’s understand each
+component. MDLabel is used to display the text with properties like horizontal
+alignment, font style, and so on.
+
+MDTextField is used to get user inputs. Here, hint_text is added to guide users
+while entering the data into the app. It has an id parameter, which will fetch the data
+entered by the user.
+
+MDButton is used to perform actions. Here, it is being used to call the predict()
+with the parameter on_press to complete the action.
+
+First store ScreenManager() into the sm object for ease of access, then add the main
+screen widget. After that, define the MainApp class (import MDApp in it as a base),
+which holds the core logic of the app. Define the build() for adding text and input
+widgets. The predict() will get the user data from the id directly as shown in the
+code.
+
+Provide these input parameters to the remote API endpoint, which will return the
+prediction for it.
+
+In kivy, you can use UrlRequest() to parse the URL and the on_success parameter
+to be triggered on request completion. In the current case, use UrlRequest() to
+call res() on completion of the API request, which will replace the blank text of
+MDLabel defined earlier: MDRaisedButton.
+
+Run the app using python main.py and if everything goes well, you should see the
+app up and running.
+
+(132) Convert the Python app into an Android app
+
+
+Now, you will learn to convert this into an Android app using the Buildozer package.
+Make sure your kivy filename is the main.py for this step. You need to install the
+Buildozer package first, if it is not installed already.
+
+pip install buildozer
+
+Install the required dependencies, as follows:
+
+pip install cython==0.29.19
+
+sudo apt-get install -y \
+python3-pip \
+build-essential \
+git \
+python3 \
+python3-dev \
+ffmpeg \
+libsdl2-dev \
+libsdl2-image-dev \
+libsdl2-mixer-dev \
+libsdl2-ttf-dev \
+libportmidi-dev \
+libswscale-dev \
+libavformat-dev \
+libavcodec-dev \
+zlib1g-dev
+
+sudo apt-get install -y \
+libgstreamer1.0 \
+gstreamer1.0-plugins-base \
+gstreamer1.0-plugins-good
+
+sudo apt-get install build-essential libsqlite3-dev sqlite3 bzip2 libbz2-dev zlib1g-dev libssl-dev openssl libgdbm-dev libgdbm-compat-dev liblzma-dev libreadline-dev libncursesw5-dev libffi-dev uuid-dev libffi6
+
+udo apt-get install libffi-dev
+
+You may need to install additional dependencies as per system requirements.
+Now, create the buildozer.spec file by running the following command:
+
+buildozer init
+
+The preceding command will create a standard buildozer.spec file. However, you
+need to modify it as per requirement. For instance, providing dependencies next
+to requirements under the Application requirements section, providing package
+name, title, and domain, providing internet permission under the Permissions
+section, and so on.
+
+Finally, build and package the Android app using the following command:
+
+buildozer -v android debug
+
+Optionally, you can use Google Colab notebook.
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+CI/CD for ML
+
+(133)
+
+By automating the manual process, you
+save time, effort, and cost. The best part about automation is that it reduces human
+errors. You can automate most of the parts while incorporating new changes or updates in the application.
+
+(134)
+
+CI/CD pipeline enables you to deploy the updates to the application in an automated
+way.
+
+(135)
+
+After studying this chapter, you should be able to build a CI/CD pipeline to deploy
+ML models in production, integrate GitHub with Jenkins, run the tests using
+Jenkins’s job and generate a test summary in Jenkins, build a Docker image, and run
+a Docker container using Jenkins. Finally, you should be able to integrate Jenkins
+with an email account to get the status of the build and deployment.
+
+(136) CI/CD pipeline for ML
+
+CI/CD is an acronym for Continuous Integration/Continuous Delivery/
+Deployment (CI/CD). The purpose of the CI/CD pipeline is to automate the chain
+of interconnected steps to deploy an application or release a new version of the
+software.
+
+(137)
+
+When a new feature gets added to the application, any improvement needs to be
+integrated with the application. However, it involves different teams that execute
+multiple tasks and validate them before moving on to the production stage. Mostly,
+this is a manual and time-consuming process, and it can cause a delay in the release
+of the new version.
+
+(138)
+
+CI/CD pipeline helps in automating the testing, running error-free code for the
+application, faster deployments, saving time and cost for developers, high reliability,
+and so on.
+
+CI/CD pipeline enables you to push the changes from development to deployment
+quickly, which usually consist of four stages:
+
+•Commit code changes: After making changes to the file or code, the
+developer pushes the updates to the source repository. This activity is often
+performed in a team. CI/CD pipeline enables any team member to check the
+integrity of the code. Hence, you can automatically push the changes to the
+repository after it passes the tests.
+
+•Build: In this phase, it fetches the changes from the repository for the build. It
+keeps a watch on the source repository for any changes. As soon as it detects
+the changes, it initiates the build process and validates the build results after
+build completion.
+
+•Test: The test phase runs the automated tests, such as unit tests, pytest, and
+API tests, on top of the build. It is a vital stage of the CI/CD pipeline. This
+ensures the overall integrity of the code and prevents any broken code from
+passing on to the next phase.
+
+•Deploy: This phase deploys the changes to the production environment.
+
+(139)
+
+Stages:
+
+1. Commit Code Changes
+2. Build
+3. Test
+4. Deploy
+5. Release
+
+Continuous Integration: Commit Code Changes  --> Build  --> Test
+Continuous Delivery: Commit Code Changes  --> Build  --> Test --> Delivery
+Continuous Deployment: Commit Code Changes  --> Build  --> Test --> Delivery --> release
+
+(140)
+
+Listing down some popular tools for CI/CD pipeline:
+
+•Jenkins
+•GitHub Actions
+•Bamboo
+•CircleCI
+•GitLab CI/CD
+•Travis CI
+
+(141) Continuous Integration (CI)
+
+In Continuous Integration (CI), the team of developers builds, run, and test code in
+local environments first. If everything goes well then, they push the updates to the
+repository. After this, the chain of steps starts to run, which involves the build, run,
+and test stages. The project members get notified at each step and get timely updates,
+such as the build outcome and test outcomes. Finally, the artifacts get stored and the
+report of the current status is sent via email or notified via Slack.
+
+When a team of developers is working on the same application, they push the code
+changes to the repository. However, due to changes in the environment, such as the
+production environment, the code can break or throw an error. On the other hand,
+there could be a conflict between updates, when multiple developers try to push the
+updates of the application to the central code repository. This issue is taken care of
+by the CI stage, where developers can push the changes that will pass through the
+defined stages, such as build, run, and test, to ensure that the code is working properly
+without any issues. However, if any of the CI stages fail, then you will be notified,
+and the further process stops. This way, you can avoid integrating any broken code
+into production. Developers can frequently push and check the functioning of the
+code, flow, and integrity of the code or applications before pushing it to the next
+stage for deployment.
+
+(142) Continuous Delivery/Deployment (CD)
+
+CD refers to Continuous Delivery or Continuous Deployment (the terms are used
+interchangeably) based on the level of automation you are planning to implement.
+The CD stage depends on the CI stage. Once the CI stage is completed, it triggers the
+CD stage in the pipeline. The purpose of the Continuous Delivery (CD) stage is to
+deliver an error-free codebase or artifact to the pre-production environment. In this
+stage, you can add a series of test cases (wherever required) to ensure a stable build
+and functional application. It sends the test status report to the team or developer,
+and then the application is manually pushed to the production environment. If any
+of the steps fail, you may need to carry out the entire process again with the required
+updates.
+
+On the other hand, continuous deployment goes one step further and deploys the
+application from the pre-production environment to the production environment
+quickly. This removes the step of manual deployment of an application to the
+production environment. However, it is optional, as it depends on the developer
+and operation team to choose the level of automation they want to implement as per
+the business and application’s nature.
+
+(143) Continuous Training (CT)
+
+A new stage introduced in the traditional CI/CD pipeline is Continuous Training
+(CT). In this stage, you expect the models to be trained continuously as new data
+comes in or any event occurs, such as the accuracy of the model dropping below the
+acceptable threshold. This may add slight complexity to CI/CD pipeline, but it is
+essential for Machine Learning deployment.
+
+With CI/CD, Continuous Training (CT) is equally important in MLOps. Model
+retraining depends on scenarios and various other factors, such as how frequently
+data is changing and the schema of input data. It also depends on events such as
+accuracy dropping below an acceptable threshold, specific periods such as the end
+of every week, or manual triggers.
+
+(144) Introduction to Jenkins
+
+Jenkins is an open-source, modular CI/CD automation tool written in Java that comes
+with several plugins. Jenkins enables the smooth and continuous flow of building,
+testing, and deploying apps with a recently updated or developed codebase. It has a
+large community support and is popular among developers.
+If the build is successful, then Jenkins automatically executes a series of steps from
+the code repository, and if everything goes well, it deploys the application to the
+server.
+
+Here are some salient features of Jenkins:
+
+•Jenkins is an open-source, free, and modular tool.
+•It is created by developers and for developers.
+•Jenkins is easy to install, configure and can be installed on Linux, MacOS,
+and Windows.
+•A large number of Jenkins plugins are available for popular cloud platforms.
+•Jenkins’s master can distribute the load to multiple slaves and enable faster
+processing.
+
+(145) Installation
+
+Jenkins can be installed on any server that supports JAVA, as it is written in JAVA.
+
+Jenkins installation is described here with various options:https://www.jenkins.io/doc/book/
+
+As you are installing Jenkins on Ubuntu, you can refer to the following link for a
+step-by-step installation guide.
+
+https://www.jenkins.io/doc/book/installing/linux/#debianubuntu
+
+(146) Build CI/CD pipeline using GitHub,Docker, and Jenkins
+
+First off, you need to create a
+codebase in the local machine and run the ML app locally to make sure it is working
+properly on the local machine. Next, you will push the changes to the GitHub
+repository. Then, integrate the GitHub repo and Jenkins by webhook. Jenkins is to
+be installed on pre-production or production servers. Jenkins will pull the latest
+codebase from the linked GitHub repo and deploy the ML app on the server.
+
+(147) Check the demo folder
+
+CORS (Cross-Origin Resource Sharing) refers to the situation when a front end
+running in a browser has JavaScript code that communicates with a back end, and
+the back end is of a different origin than the front end. However, it depends on your
+application and requirement whether to use it or not.
+
+In the Dockerfile, it will first pull the base image, that is, Python 3.7
+slim buster, and install the necessary packages. After that, packages from the
+requirements file will be installed, and the 8005 port will be exposed so that it can
+be accessed outside the Docker container. Finally, it will assign PYTHONPATH in the
+ENV instruction and will execute the command mentioned in the CMD instruction to
+install the Python package in editable mode.
+
+(148) Create a Personal Access Token (PAT) on GitHub
+
+
+If you perform any action like pull, push, or clone using the git cli command,
+then it won’t work anymore with the GitHub password. As a matter of fact, GitHub
+has removed password authentication. Instead, you have to use a Personal Access
+Token (PAT).
+
+PATs are an alternative to using passwords for authentication to GitHub Enterprise
+Server when using the GitHub API or the command line.
+
+First, you need to create a PAT. This is described in the following link:
+
+https://docs.github.com/en/enterprise-server@3.4/authentication/keeping-your-
+account-and-data-secure/creating-a-personal-access-token
+
+(149) Create a webhook on the GitHub repository
+
+A webhook can be considered a lightweight API that enables one-way data sharing
+after being triggered by certain events. In GitHub, a webhook can be triggered when
+actions, such as push and pull, are performed on a repository. With the help of the
+GitHub webhook, you can trigger the CI stage on a remote server.
+
+Go to your GitHub repo | Settings | Webhooks.
+
+Alternatively, you can directly jump to that page using the following URL:
+
+https://github.com/<username>/<your-repo-name>/settings/hooks
+
+In the current case, it is as follows:
+
+https://github.com/suhas-ds/docker_pkg_jenkins/settings/hooks
+
+You cannot use https://localhost:8080/github-webhook/ in GitHub webhook’s
+payload URL as the localhost URL needs to be exposed to the internet. You can use
+ngrok for exposing localhost URLs on the internet. Refer to the official site of ngrok
+https://ngrok.com/ for more details.
+
+Here, ngrok is being used for demonstration purposes; however, the remote server’s
+IP or domain can be used in the deployment stage.
+
+Use the command ngrok http 8080 to expose the 8080 port publicly.
+
+(150)
+
+Provide a payload URL, as shown in the following figure. The payload URL format
+was discussed earlier in this chapter. Select the Content type as an application/json
+format. The Secret field is optional. Let’s leave it blank for now.
+
+Choose the Enabled SSL verification and Just push the event options, as shown in
+the following figure, so that it will send data only when someone pushes updates
+to the repository. However, you can also select the individual events, that is, Let me
+select individual events.
+Now, click on the Add Webhook button to save Jenkins GitHub Webhook.
+
+(151) Configure Jenkins
+
+Now, mainly two sections are to be configured for the current scenario: GitHub
+webhook integration and extended email integration.
+
+1. Go to Jenkins dashboard.
+2. Go to Manage-Jenkins | Manage Plugin.
+3. Install Git, GitHub, and email plugins without restart.
+
+If the preceding plugins are already selected, you can continue to the next step.
+
+Now, let’s configure the GitHub webhook in Jenkins.
+
+Go to Manage Jenkins | Configure System.
+
+Scroll down and update the API URL in the GitHub section, as follows:
+
+https://api.github.com
+
+add token
+
+save
+
+(152) 
+
+Now, whenever the developer pushes the updates to the repository, Jenkins will
+detect the changes and start executing a series of commands one by one.
+Next, configure the email for a feedback loop or status updates, for example,
+succeeded or failed.
+
+Go to Manage Jenkins | Configure System.
+
+Scroll down and update the fields in the GitHub section.
+
+In the following figure, the Default Subject field is updated by adding Status at the
+beginning. Also, an email body is added in the Default Content field. It is highly
+customizable, so you can update it as per requirement.
+
+In the Default Triggers section, choose the Always checkbox so that Jenkins sends
+the status email for both success and failure scenarios.
+
+Now, select HTML (text/html) from the dropdown in the Default Content Type
+field and add your email ID in Default Recipients
+
+In the Extended E-mail Notification section, provide details for the email
+notifications. In the current scenario, Gmail details are provided, as follows.
+
+•smtp.gmail.com to SMTP server
+•465 to SMTP Port
+•Add email login credentials
+•Check the Use SSL box
+•Click on the Save button
+Provide your email details as shown in the following figure:
+
+If you are integrating your Gmail account for email notifications, you will have
+to allow less secure apps in the settings of your Gmail account. You can go to the
+following URL to turn it on if it is off.
+
+https://myaccount.google.com/lesssecureapps
+
+For more details, visit https://support.google.com/accounts/answer/6010255?hl=en.
+The required configuration for Jenkins is complete.
+
+(153) Create CI/CD pipeline using Jenkins
+
+Now, you will build a simple CI/CD pipeline using GitHub and Jenkins. When
+developers push the updates to the GitHub repository, the GitHub webhook detects
+the changes and sends the notification to Jenkins. Jenkins pulls the latest code from
+the GitHub repository, builds the Docker image, and runs the container using that
+image. Next, it trains the model and exports the pickle object from the trained model.
+In the next step, pytest results are exported and displayed in Jenkins. After passing
+all the tests, it will run the ML web app. Finally, it will send the feedback via email
+to the developer or concerned team.
+
+(154) Stage 1: 1-GitHub-to-container
+
+At this stage, Jenkins will pull the latest code and files from GitHub as soon as the
+developer pushes the updates to the linked GitHub repository. Let’s understand this
+process step by step.
+
+When the developer pushes the updates to the GitHub repository, the webhook
+detects the changes, and it gets triggered. GitHub webhook sends a message to
+Jenkins that new updates have been detected, and then Jenkins pulls the latest code
+files to start building the Docker image.
+
+As shown in the following figure, select the New Item from the left panel of the
+Jenkins dashboard.
+
+As shown in the following figure, provide a job name in the Enter an item name
+field and choose a Freestyle project. In the current case, it is named 1-GitHub-to-
+docker-container.
+
+(155)
+
+As shown in the following figure, select the Git radio button under the Source Code
+Management tab and provide the GitHub repository URL. By default, it will be the
+master branch, but you can update it. If your repository is private, then you may
+need to pass the credentials for the same.
+
+As shown in the following figure, choose the GitHub hook trigger for GITScm
+polling under the Build Triggers tab, to pull the latest updates from the GitHub
+repository.
+
+In the following figure, Docker commands are being executed for building and
+running Docker images with the latest changes from the GitHub repository.
+
+echo "Stage 1 -------------------------->"
+sudo -S docker build -t loan-pred:v1 .
+sudo -S docker run -d -it --name model1 -p 8005:8005 loan-pred:v1 bash
+echo "docker container is running"
+
+[For Password Error: https://stackoverflow.com/questions/17940612/authentication-error-in-jenkins-on-using-sudo]
+
+(156) Stage 2: 2-training
+
+At this stage, the model will be trained on training data by running the train_pipeline.
+py file inside the Docker container. As shown in the following figure, select the None
+radio button under the Source Code Management tab, as it is the next stage; no need
+to pull the source code again.
+
+As shown in the following figure, select the Build after other projects are built
+option under the Build Triggers tab. Next, provide the name of the previous stage in
+the Projects to watch field. Then, select the first radio button, that is, Trigger only if
+the build is stable, which means stage 2 will start executing only after the successful
+completion of the previous stage.
+
+As shown in the following figure, write Docker commands for training the model
+pipeline and exporting the latest pickle object of the trained model, under the Build
+tab.
+
+echo "Stage 2 ---------------------------------------------------->"
+sudo docker exec model1 python prediction_model/train_pipeline.py
+echo "Model Training Completed"
+
+The console output of stage 2 is shown in the following figure. It tells you what
+caused stage 2 to trigger and the status of stage 2. After that, Jenkins is triggering
+stage 3 on the successful completion of stage 2.
+
+(157) Stage 3: 3-testing
+
+In this stage, Jenkins is running pytest and publishing test results using JUnit.
+Jenkins understands the JUnit test report in XML format. JUnit enables Jenkins to
+provide test results, including historical test result trends, failure tracking (if any),
+and a neat and clean web UI for viewing test reports. Choose the None radio button
+under the Source Code Management tab.
+
+As shown in the following figure, select Build after other projects are built, and
+Trigger only if build is stable under Build Triggers, which denotes that this stage is
+the next one and will start execution after completion of the previous stage.
+
+As shown in the following figure, under the Build tab, Jenkins is running tests
+inside the running Docker container using the Docker command. Next, the Docker
+command will export the pytest results in a .xml file. Then, the mkdir command will
+create a new directory as reports and copy test results to it.
+
+echo "Stage 3 ------------------------------------>"
+sudo docker exec model pytest -v --junitxml TestResults.xml --cache-clear
+rm -rf reports; mkdir reports
+sudo docker cp model:/code/src/TestResults.xml reports/
+echo "Test reports completed" 
+
+Finally, it is publishing the test results using the JUnit plugin.
+
+As shown in the following figure, choose Publish JUnit test results report, under
+Post-build Actions.
+
+As shown in the following figure, provide a path where you want to store the test
+results. Jenkins will fetch the test results from the mentioned path and publish the
+test results.
+
+reports/TestResults.xml
+
+(158) Stage 4: 4-deployment-status-email
+
+At this stage, Jenkins is deploying an ML web app using FastAPI and a trained
+model.
+
+As shown in the following figure, select Build after other projects are built, and
+Trigger only if build is stable under Build Triggers, which means this stage is the
+next one and will start execution after completion of the previous stage.
+
+As shown in the following figure, select Execute shell from the dropdown Add
+build step, under the Build tab, as it will execute the commands from the shell.
+
+In the following figure, Jenkins is executing a FastAPI command inside a running
+Docker container named model1, and -d in the following command is to instruct
+the Docker container to run the command in detached mode. And -w /code means
+it will change the working directory to /code. Finally, --host and --port are the
+address and port on which the FastAPI web app will be running, respectively.
+
+echo "Stage 4 --------------------------------->"
+sudo docker exec -d -w /code model uvicorn main:app --proxy-headers --host 0.0.0.0 --port 8005
+echo "Successfully Deployed"
+
+As shown in the following figure, choose the Extended Email Notification from the
+Add post-build action dropdown.
+
+As shown in the following figure, select the Content Type as HTML (text/html) so
+that you can use HTML tags in the body; however, it is optional.
+
+As shown in the following figure, select the Always option under the Triggers
+section. This enables Jenkins to send an email despite the build status (Success or
+Failure). It will send the email to the mentioned people.
+
+As shown in the following figure, choose the Compress and Attach Build Log option
+from the Attach Build Log dropdown. By enabling this option, people will get the
+console output of the current stage so that people come to know what happened in
+the job without visiting Jenkin’s job; however, it is optional.
+
+As you can see in the following figure, an email shows the result of stage 4. If the
+job fails due to any reason, then this email will be triggered because you selected the
+Always option in the extended email plugin. This email contains the job name, build
+number, and the status of the job. Here, the Attach Build Log option is not selected.
+
+
+(159) 
+
+It’s time to check the deployed loan prediction web app. This web app is running
+on the 8005 port, so you can access it by the server’s IP address (or domain name),
+followed by port 8005. When any changes are committed to a linked GitHub
+repository, Jenkins will trigger the first and subsequent stages one by one, and the
+latest web app will be deployed again. In short, after pushing the updates to the
+GitHub repository, you can sit and watch the status of each stage or just wait for the
+email.
+
+Provide the user data and hit the Execute button, as shown in the following figure.
+
+(160)
+
+Issue related to mail:
+
+https://www.youtube.com/watch?v=TqiBFlU3ACU&ab_channel=Mukeshotwani
+https://support.google.com/mail/thread/4477145/no-app-passwords-under-security-signing-in-to-google-panel?hl=en
+
+-----------------------------------------------------------------------------------------------------------------------
+
+(161) Deploying ML Models on Heroku
+
+Heroku is a Platform as a Service (PaaS) platform that enables developers to
+build, run, and operate applications entirely in the cloud. You can push the Docker
+container to Heroku or provide GitHub repository details, such as the branch name,
+to auto-deploy the web app as soon as you push new changes to the model. This
+way, you can make the ML model accessible on the web, ready to make predictions.
+
+If you are a beginner, then GitHub CI/CD is the simplest platform to build an end-
+to-end CI/CD pipeline. It is easy to manage as everything is in GitHub. You only
+need a GitHub repository to create and run a GitHub Actions workflow.
+
+(162)
+
+After studying this chapter, you should be able to deploy the ML model on Heroku
+- Platform as a Service (PaaS) and integrate the GitHub repository into Heroku
+for automated deployment. Create the Heroku app from Heroku web UI and the
+terminal. You will learn to build and run CI/CD pipelines using GitHub Actions and
+Heroku. You will also learn to execute multiple tests using pytest and tox on GitHub
+Actions. Create YAML files for GitHub Actions to run the workflow.
+
+(163)
+
+Heroku is a container-based cloud Platform as a Service (PaaS) platform. Developers
+use Heroku to deploy, manage, and scale modern apps. It has a pretty easy process
+to deploy your applications.
+
+Heroku saves you time by removing the difficulty of maintaining servers, hardware,
+or infrastructure. It supports the most popular languages, such as Node, Ruby, Java,
+Clojure, Scala, Go, Python, and PHP.
+
+(164)
+
+Simply put, Heroku allows you to make your apps available on the internet for
+others to access, like a website. With a few steps, it allows you to make your app
+accessible to others. You can focus on app development without worrying about
+infrastructure, servers, and other such things
+
+(165)
+
+When GitHub integration
+is configured for a Heroku app, Heroku can automatically build and release (if the
+build is successful) the updates when pushed to the specified repository.
+
+(166)
+
+Heroku apps can be scaled to run on multiple dynos (a container that runs a Heroku
+app’s code) simultaneously (except on Free or Hobby dynos) with simple steps to
+avoid any downtime. Heroku offers manual and auto scaling of the dynos. You can
+scale it horizontally by adding more dynos to handle the heavy traffic of requests.
+On the other hand, you can scale it vertically by increasing resources like memory
+and CPU as required.
+
+(167)
+
+There are three methods to deploy the web app on the Heroku platform:
+
+•Deployment with Heroku git
+•Deployment with GitHub repository integration
+•Deployment with Container Registry
+
+(168) 
+
+Setting up Heroku:
+
+You need to create a Heroku account. This is a one-time activity. Go to the Heroku
+platform at https://www.heroku.com/
+
+Step 1:
+Create a Heroku account (if you don’t have one) and log in.
+Select the primary development language as Python and create a free account.
+
+Step 2:
+After logging in to the account, create a new app, as shown in the following figure:
+
+Click on the Create new app button and add the app name. In this case, it is docker-
+ml-cicd.
+
+Hit the Create app button and complete the process.
+Note: Two or more Heroku apps can’t have the same name.
+
+------------------------------------------------- left heroku because it needs credit card details to create app -----------------------
+
+(169) Deploying ML Models on Microsoft Azure
+
+ 
+Microsoft Azure is a popular cloud platform among developers.
+
+In this chapter, you will be acquainted with MLaaS, that is, Machine Learning as a
+Service, offered by Microsoft Azure. This chapter is mainly divided into two parts.
+In the first part, GitHub Actions and Azure web app containers will be used in the
+CI/CD pipeline to deploy the ML app on the Azure cloud. In the second part, Azure
+DevOps and Azure Machine Learning (AML) service will be used to deploy ML
+apps on the Azure cloud.
+
+(170)
+
+After studying this chapter, you should be able to deploy ML models on Platform as
+a Service (PaaS) and ML as a Service (MLaaS). You should also be able to integrate
+the GitHub repository to Azure for automated deployment of the app. You should
+know how to create a web app and container for it. Additionally, you will be familiar
+with how to build and run CI/CD pipelines using GitHub Actions and Azure and
+execute multiple test cases using pytest and tox on GitHub Actions. Further on in
+the chapter, you will learn how to create YAML files for GitHub Actions to run the
+workflow. By the end of the chapter, you should also be able to build and run CI/CD
+pipelines using Azure DevOps.
+
+(171)
+
+Microsoft Azure (also known as Azure) is a cloud computing service offered by
+Microsoft. Azure provides different forms of cloud computing options, such as
+Software as a Service (SaaS), Platform as a Service (PaaS), ML as a Service (MLaaS),
+and Infrastructure as a Service (IaaS), for deploying applications and services on
+Azure.
+
+Microsoft first introduced its cloud computing services as Windows Azure in 2008,
+but it was commercially launched in 2010. Later, in 2014, they expanded their services
+and re-launched it as Microsoft Azure.
+
+
+Azure is a ready-to-go, resourceful, flexible, and fast yet economical cloud platform.
+It comes with 200+ products and cloud services; however, running Virtual Machines
+(VM) or containers is popular among developers. It is compatible with open-source
+technologies like Docker, Jenkins, and Kubernetes. Azure has a built-in Continuous
+Integration and Continuous Deployment pipeline.
+
+Azure enables integration with GitHub to make it easy to deploy code available
+on the GitHub repository to apps running on Azure. When GitHub integration is
+configured for an Azure app, Azure can automatically build and release (if the stage
+is completed successfully) and push it to Azure.
+
+Azure App Service can be scaled using Azure Kubernetes Service (AKS). You can
+choose different tiers that come with a set of computational power and set the auto
+scale limit. When required, it will make replicas of the service to serve the requests
+seamlessly.
+
+There are numerous ways to deploy the app on the Azure platform, but you will
+explore two methods in this chapter:
+•Deployment using GitHub Actions
+•Deployment using Azure DevOps and Azure ML
+
+Azure primarily uses a pay-as-you-go pricing plan, which allows you to pay only
+for the services you have used. If any application uses multiple services, then
+each service will be billed based on the plan/tier obtained for it. Microsoft offers a
+discounted rate if the user or organization is looking for a long-term commitment.
+
+Azure is a paid service, but it allows new users to explore its functionality and
+services for free for a limited duration using free credits. After that, you would have
+to activate a pay-as-you-go pricing plan.
+
+(172)
+
+Set up an Azure account:
+
+Create an Azure account (if you don’t have one), and log in.
+
+Note: You can explore Azure for free; however, you need to provide credit/debit
+card details. Azure will send a notification if any payment is to be made. Also,
+you will get access to popular services for free for 12 months, with an additional
+$200 credit for 30 days.
+
+Azure DevOps will be used in this chapter. For this, you need to log in to Azure
+DevOps.
+
+https://azure.microsoft.com/en-us/services/devops/
+
+To connect and communicate with Azure, the Azure command-line tool is required,
+that is, azure-cli and azureml-sdk.
+
+Install Azure CLI with your local terminal:
+
+pip install azure-cli==2.37.0
+pip install --upgrade azureml-sdk[cli]
+
+You can create a resource group. It is a container that holds related resources for Azure
+projects. You can allocate the resources to this resource group as per requirement.
+
+(173)
+
+Deployment using GitHub Actions:
+
+In this part, an ML app will be deployed in Azure web service using Docker. GitHub
+Actions will be used for building, testing, and deploying ML apps to Azure. First
+off, GitHub Actions will build and push a Docker image to the Azure Container
+Registry (ACR) and pull it into the Azure App Service.
+
+Firstly, prepare the required codebase for this implementation. Next, create an ACR,
+and then build and push the Docker image to the ACR. In the next step, create a web
+app in the Azure App Service, which will pull container images from the ACR to
+deploy a web-based ML app.
+
+CORS (Cross-Origin Resource Sharing) refers to the situations when a front end
+running in a browser has JavaScript code that communicates with a back end, and
+the back end is of a different origin than the front end. However, it depends on your
+application and requirement whether to use it.
+1. origins = [
+2.
+3."*"
+]
+4.
+5. app.add_middleware(
+6.CORSMiddleware,
+7.allow_origins=origins,
+8.allow_credentials=True,
+9.allow_methods=["*"],
+10.allow_headers=["*"],
+11. )
+
+The LoanPred class for the data model is inherited from BaseModel. Then, add a
+root view with a function, which returns 'message': 'Loan Prediction App' for
+the home page.
+
+(174)
+
+Here, create /predict_status as an endpoint, also known as the route. Then,
+add predict_loan_status() with a parameter of the type data model, that is,
+LoanPred.
+
+The following function will create the UI for user input. Here, create /predict as
+an endpoint, also known as a route, and declare the input data types expected from
+users.
+
+(175)
+
+docker-compose.yml
+
+This builds the web service from the Dockerfile in the current directory and mounts
+the app directory on the host to /app inside the container.
+
+pytest.ini
+
+Pytest allows you to use a global configuration file, that is, pytest.ini, where you
+can keep settings and additional arguments that you pass whenever you run the
+command. You can add -p no:warnings to addopts field, which will suppress the
+warnings. This section will execute the parameters when pytest runs.
+
+1. [pytest]
+2. addopts = -p no:warnings
+
+runtime.txt
+This file is optional. In this file, you can declare the Python version to be used.
+1. python-3.7
+
+(176)
+
+start.sh
+
+This is a shell script that contains a series of commands to be executed by the bash
+shell. The first line of this file dictates which interpreter should be used to execute
+this script.
+
+It will install the prediction_model package from src/ placed in app/ and run the
+FastAPI app in the next command. The main.py is the file name located in the app
+directory.
+
+1. #!/bin/bash
+2. pip install app/src/
+3. python app/main.py
+
+(177)
+
+Make sure you remove the --reload option if you are using it. The --reload
+option consumes much more resources, and it is also unstable. You can use it during
+development but should not use it in production.
+
+(178)
+
+test.py
+
+This test file will enable testing the FastAPI app using testclient. FastAPI provides
+the same starlette.testclient as fastapi.testclient; however, it comes
+directly from Starlette. With this, you can check the app’s routes without running
+them from the app explicitly.
+
+(179)
+
+Define the test functions with a name starting with test_ as per standard naming
+conventions of pytest:
+
+1. def test_read_main():
+2.response = client.get("/")
+3.assert response.status_code == 200
+4.assert response.json() == {'message': 'Loan Prediction App'}
+
+Write simple assert statements in the test function to check the output.
+
+(180)
+
+tox.ini
+
+This is the tox configuration file. The tox automates and standardizes the testing in
+Python. It is a virtualenv management and test command-line tool to check whether
+your package is compatible with different Python versions. The tox will first
+create a virtual environment based on the configuration provided and then install
+dependencies. Finally, it will execute the commands provided in the configuration.
+tox-gh-actions is a plugin that enables tox to run on GitHub Actions. Hence, you
+need to install tox-gh-actions in the GitHub Actions workflow before running the
+tox command.
+
+This file will check the package compatibility with Python-3.7. First, it will install the
+required dependencies and then run the pytest commands.
+
+1. [tox]
+2. envlist = py37
+3. skipsdist=True
+4.
+5. [gh-actions]
+6. python =
+7.
+3.7: py37
+8.
+9. [testenv]
+10. install_command = pip install {opts} {packages}
+11. deps =
+12. -r requirements.txt
+13.
+14. setenv =
+15.
+PYTHONPATH=src/
+16.
+17. commands=
+18.pip install requests
+19.pytest -v test.py
+20.pytest -v src/tests/
+
+(181)
+
+Once all files and codebase are ready, run the app on the local machine. If the app
+is running on a local machine, then deploy the app to the Azure Container Registry.
+
+Build a Docker image on a local machine using the following command:
+
+sudo docker build . -t mlappcd.azurecr.io/mlapp-cd:v1
+
+Then, run the Docker image using the following command:
+
+docker run -p 8000:8000 mlappcd.azurecr.io/mlapp-cd:v1
+
+At this point, you should see an ML app up and running on the local machine.
+
+(182)
+
+Infrastructure setup:
+
+First off, set up infrastructure on Azure cloud. In this section, you will learn to set
+up an Azure Container Registry (ACR) and create a web app container using the
+Azure App Service.
+
+(183)
+
+Azure Container Registry:
+
+To begin with, push the Docker image to the Azure Container Registry from the local
+machine, and from the next time onward, GitHub Actions will push the image. This
+Docker image will be pulled by the Azure App Service to run a web app container.
+
+(184)
+
+Create an Azure Container Registry, as shown in the following figure:
+
 
